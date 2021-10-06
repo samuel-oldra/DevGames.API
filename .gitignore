@@ -1,4 +1,5 @@
 push.cmd
+*.user
 **/.vs/
 **/bin/
 **/obj/
