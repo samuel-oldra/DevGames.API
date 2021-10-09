@@ -17,5 +17,10 @@
         public string Description { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public List<Comment> Comments { get; private set; }
+
+        public void AddCommet(Comment comment)
+        {
+            Comments.Add(comment);
+        }
     }
 }
