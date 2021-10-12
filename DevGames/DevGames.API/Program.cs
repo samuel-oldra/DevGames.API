@@ -1,9 +1,11 @@
+using DevGames.API.Mappers;
 using DevGames.API.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddSingleton<DevGamesContext>(); // Fake Banco de Dados
+builder.Services.AddAutoMapper(typeof(BoardMapper)); // Configura AutoMapper
 builder.Services.AddControllers();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
