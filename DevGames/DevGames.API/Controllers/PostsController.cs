@@ -50,7 +50,7 @@ namespace DevGames.API.Controllers
 
             if (board == null) return NotFound();
 
-            var post = new Post(model.Id, model.Title, model.Description);
+            var post = new Post(model.Title, model.Description, board.Id);
 
             board.AddPost(post);
 
@@ -69,7 +69,7 @@ namespace DevGames.API.Controllers
 
             if (post == null) return NotFound();
 
-            var comment = new Comment(model.Title, model.Description, model.User);
+            var comment = new Comment(model.Title, model.Description, model.User, postId);
 
             post.AddCommet(comment);
 
