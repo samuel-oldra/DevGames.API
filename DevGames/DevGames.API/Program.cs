@@ -1,10 +1,15 @@
 using DevGames.API.Mappers;
 using DevGames.API.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddSingleton<DevGamesContext>(); // Fake Banco de Dados
+// Add services to the container. 01.16.00
+//builder.Services.AddDbContext<DevGamesContext>(o => o.UseInMemoryDatabase("DevGamesCs"));
+
+var connectionString = builder.Configuration.GetConnectionString("DevGamesDb");
+builder.Services.AddDbContext<DevGamesContext>(o => o.UseSqlServer(connectionString));
+
 builder.Services.AddAutoMapper(typeof(BoardMapper)); // Configura AutoMapper
 builder.Services.AddControllers();
 
