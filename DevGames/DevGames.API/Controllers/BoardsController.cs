@@ -44,6 +44,7 @@ namespace DevGames.API.Controllers
             var board = mapper.Map<Board>(model);
 
             context.Boards.Add(board);
+            context.SaveChanges();
 
             return CreatedAtAction(nameof(GetById), new { id = board.Id }, model);
         }
@@ -57,6 +58,7 @@ namespace DevGames.API.Controllers
             if (board == null) return NotFound();
 
             board.Update(model.Description, model.Rules);
+            context.SaveChanges();
 
             return NoContent();
         }
