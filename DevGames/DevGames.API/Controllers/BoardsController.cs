@@ -39,8 +39,24 @@ namespace DevGames.API.Controllers
             return Ok(board);
         }
 
-        // POST: api/boards
+        /// <summary>
+        /// Post Board
+        /// </summary>
+        /// <remarks>
+        /// Request Body Example:
+        /// {
+        /// "gameTitle": "Mario Kart",
+        /// "description": "Jogo de corrida divertido",
+        /// "rules": "Corra, ultrapasse e use os itens especiais"
+        /// }
+        /// </remarks>
+        /// <param name="model">Dados do Board</param>
+        /// <returns>Objeto criado</returns>
+        /// <response code="201">Sucesso</response>
+        /// <response code="400">Dados inválidos</response>
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult Post(AddBoardInputModel model)
         {
             var board = mapper.Map<Board>(model);
