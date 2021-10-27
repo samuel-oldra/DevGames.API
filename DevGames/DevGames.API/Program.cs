@@ -49,6 +49,7 @@ builder.Services.AddSwaggerGen(o =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+// INFO: Swagger visível só em desenvolvimento
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
