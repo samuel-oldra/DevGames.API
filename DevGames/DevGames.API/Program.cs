@@ -3,11 +3,28 @@ using DevGames.API.Persistence;
 using DevGames.API.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Serilog;
+using Serilog.Sinks.MSSqlServer;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+// Serilog
+builder.Host.ConfigureAppConfiguration((hostingContext, config) =>
+{
+    var settings = config.Build();
+    Serilog.Log.Logger = new LoggerConfiguration()
+        .Enrich.FromLogContext()
+        .WriteTo.MSSqlServer(settings.GetConnectionString("DevGamesCs"),
+        sinkOptions: new MSSqlServerSinkOptions()
+        {
+            AutoCreateSqlTable = true,
+            TableName = "Logs"
+        })
+        .CreateLogger();
+}).UseSerilog();
 
 // PARA ACESSO AO BANCO EM MEMÓRIA
 builder.Services.AddDbContext<DevGamesContext>(o => o.UseInMemoryDatabase("DevGamesDb"));
