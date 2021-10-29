@@ -4,7 +4,6 @@ using DevGames.API.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Serilog;
-using Serilog.Sinks.MSSqlServer;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,12 +16,18 @@ builder.Host.ConfigureAppConfiguration((hostingContext, config) =>
     var settings = config.Build();
     Serilog.Log.Logger = new LoggerConfiguration()
         .Enrich.FromLogContext()
-        .WriteTo.MSSqlServer(settings.GetConnectionString("DevGamesCs"),
-        sinkOptions: new MSSqlServerSinkOptions()
-        {
-            AutoCreateSqlTable = true,
-            TableName = "Logs"
-        })
+
+        // PARA LOG NO SQL Server
+        //.WriteTo.MSSqlServer(settings.GetConnectionString("DevGamesCs"),
+        //sinkOptions: new MSSqlServerSinkOptions()
+        //{
+        //    AutoCreateSqlTable = true,
+        //    TableName = "Logs"
+        //})
+
+        // PARA LOG NO CONSOLE
+        .WriteTo.Console()
+
         .CreateLogger();
 }).UseSerilog();
 
