@@ -26,9 +26,12 @@ Foi desenvolvida uma API REST completa de gerenciamento de boards, posts e comen
 ![alt text](https://raw.githubusercontent.com/samuel-oldra/Projeto-WebApi-DotNet-6/main/README_IMGS/swagger_ui.png)
 
 ## Tool Entity Framework Core (migrations)
-
-![alt text](https://raw.githubusercontent.com/samuel-oldra/Projeto-WebApi-DotNet-6/main/README_IMGS/dotnet-ef.png)
+```
+dotnet tool install --global dotnet-ef
+```
 
 ## Migrations
-
-![alt text](https://raw.githubusercontent.com/samuel-oldra/Projeto-WebApi-DotNet-6/main/README_IMGS/dotnet-ef%20migration%20and%20update.png)
+```
+dotnet ef migrations add InitialMigration -o Persistence/Migrations
+dotnet ef database update
+```
