@@ -1,4 +1,4 @@
-push.cmd
+*.suo
 *.user
 **/.vs/
 **/bin/
