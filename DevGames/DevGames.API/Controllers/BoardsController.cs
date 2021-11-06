@@ -7,8 +7,8 @@ using Serilog;
 
 namespace DevGames.API.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class BoardsController : ControllerBase
     {
         private readonly IMapper mapper;
@@ -45,7 +45,7 @@ namespace DevGames.API.Controllers
         /// Detalhes do Board
         /// </summary>
         /// <param name="id">ID do Board</param>
-        /// <returns>Lista um Board</returns>
+        /// <returns>Mostra um Board</returns>
         /// <response code="200">Sucesso</response>
         /// <response code="404">Não encontrado</response>
         [HttpGet("{id}")]
