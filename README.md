@@ -23,7 +23,7 @@ Foi desenvolvida uma API REST completa de gerenciamento de boards, posts e comen
 
 ###
 
-![alt text](https://raw.githubusercontent.com/samuel-oldra/Projeto-WebApi-DotNet-6/main/README_IMGS/swagger_ui.png)
+![alt text](https://raw.githubusercontent.com/samuel-oldra/DevGames.API/main/README_IMGS/swagger_ui.png)
 
 ## Tool Entity Framework Core (migrations)
 ```
