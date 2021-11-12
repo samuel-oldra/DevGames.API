@@ -7,10 +7,13 @@ namespace DevGames.API.Persistence.Repositories
     {
         private readonly DevGamesContext context;
 
-        public PostRepository(DevGamesContext context)
-        {
-            this.context = context;
-        }
+        public PostRepository(DevGamesContext context) => this.context = context;
+
+        public IEnumerable<Post> GetAllByBoard(int boardId) =>
+            context.Posts.Where(p => p.BoardId == boardId);
+
+        public Post GetById(int id) =>
+            context.Posts.Include(p => p.Comments).SingleOrDefault(p => p.Id == id);
 
         public void Add(Post post)
         {
@@ -24,21 +27,7 @@ namespace DevGames.API.Persistence.Repositories
             context.SaveChanges();
         }
 
-        public IEnumerable<Post> GetAllByBoard(int boardId)
-        {
-            return context.Posts.Where(p => p.BoardId == boardId);
-        }
-
-        public Post GetById(int id)
-        {
-            return context.Posts
-                .Include(p => p.Comments)
-                .SingleOrDefault(p => p.Id == id);
-        }
-
-        public bool PostExists(int postId)
-        {
-            return context.Posts.Any(p => p.Id == postId);
-        }
+        public bool PostExists(int postId) =>
+            context.Posts.Any(p => p.Id == postId);
     }
 }

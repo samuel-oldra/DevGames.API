@@ -5,9 +5,7 @@ namespace DevGames.API.Persistence
 {
     public class DevGamesContext : DbContext
     {
-        public DevGamesContext(DbContextOptions<DevGamesContext> options) : base(options)
-        {
-        }
+        public DevGamesContext(DbContextOptions<DevGamesContext> options) : base(options) { }
 
         public DbSet<Board> Boards { get; set; }
         public DbSet<Post> Posts { get; set; }

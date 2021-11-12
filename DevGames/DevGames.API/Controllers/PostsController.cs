@@ -12,10 +12,7 @@ namespace DevGames.API.Controllers
     {
         private readonly IPostRepository repository;
 
-        public PostsController(IPostRepository repository)
-        {
-            this.repository = repository;
-        }
+        public PostsController(IPostRepository repository) => this.repository = repository;
 
         public IPostRepository Repository { get; }
 
