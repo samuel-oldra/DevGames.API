@@ -8,7 +8,6 @@ namespace DevGames.API.Mappers
     {
         public BoardMapper()
         {
-            // CreateMap<ObjetoOrigem, ObjetoDestino>();
             CreateMap<AddBoardInputModel, Board>();
         }
     }
