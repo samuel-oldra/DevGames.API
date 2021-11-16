@@ -31,7 +31,7 @@ builder.Host.ConfigureAppConfiguration((hostingContext, config) =>
         .CreateLogger();
 }).UseSerilog();
 
-// PARA ACESSO AO BANCO EM MEMÓRIA
+// PARA ACESSO AO BANCO EM MEMÃ“RIA
 builder.Services.AddDbContext<DevGamesContext>(o => o.UseInMemoryDatabase("DevGamesDb"));
 
 // PARA ACESSO AO SQL Server
@@ -41,7 +41,7 @@ builder.Services.AddDbContext<DevGamesContext>(o => o.UseInMemoryDatabase("DevGa
 // Configura AutoMapper
 builder.Services.AddAutoMapper(typeof(BoardMapper));
 
-// Padrão Repository
+// PadrÃ£o Repository
 builder.Services.AddScoped<IBoardRepository, BoardRepository>();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
 
@@ -53,7 +53,7 @@ builder.Services.AddSwaggerGen(o =>
 {
     o.SwaggerDoc("v1", new OpenApiInfo
     {
-        Title = "DevGames API",
+        Title = "DevGames.API",
         Version = "v1",
         Contact = new OpenApiContact
         {
@@ -71,7 +71,7 @@ builder.Services.AddSwaggerGen(o =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-// INFO: Swagger visível só em desenvolvimento
+// INFO: Swagger visÃ­vel sÃ³ em desenvolvimento
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
