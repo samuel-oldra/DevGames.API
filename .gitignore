@@ -1,5 +1,4 @@
-*.suo
-*.user
-**/.vs/
-**/bin/
-**/obj/
+.vs/
+.vscode/
+bin/
+obj/
