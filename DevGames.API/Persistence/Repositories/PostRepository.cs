@@ -7,12 +7,13 @@ namespace DevGames.API.Persistence.Repositories
     {
         private readonly DevGamesContext context;
 
-        public PostRepository(DevGamesContext context) => this.context = context;
+        public PostRepository(DevGamesContext context) =>
+            this.context = context;
 
         public IEnumerable<Post> GetAllByBoard(int boardId) =>
             context.Posts.Where(p => p.BoardId == boardId);
 
-        public Post GetById(int id) =>
+        public Post? GetById(int id) =>
             context.Posts.Include(p => p.Comments).SingleOrDefault(p => p.Id == id);
 
         public void Add(Post post)

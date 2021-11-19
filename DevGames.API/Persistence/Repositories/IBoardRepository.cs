@@ -6,7 +6,7 @@ namespace DevGames.API.Persistence.Repositories
     {
         IEnumerable<Board> GetAll();
 
-        Board GetById(int id);
+        Board? GetById(int id);
 
         void Add(Board board);
 
