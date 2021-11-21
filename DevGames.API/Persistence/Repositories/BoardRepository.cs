@@ -1,4 +1,5 @@
 ﻿using DevGames.API.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace DevGames.API.Persistence.Repositories
 {
@@ -13,7 +14,7 @@ namespace DevGames.API.Persistence.Repositories
             context.Boards.ToList();
 
         public Board? GetById(int id) =>
-            context.Boards.SingleOrDefault(b => b.Id == id);
+            context.Boards.Include(b => b.Posts).SingleOrDefault(b => b.Id == id);
 
         public void Add(Board board)
         {
@@ -26,5 +27,8 @@ namespace DevGames.API.Persistence.Repositories
             context.Boards.Update(board);
             context.SaveChanges();
         }
+
+        public bool BoardExists(int id) =>
+            context.Boards.Any(p => p.Id == id);
     }
 }

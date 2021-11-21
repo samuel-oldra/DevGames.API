@@ -13,12 +13,14 @@ namespace DevGames.API.Controllers
     {
         private readonly IMapper mapper;
 
-        private readonly IBoardRepository repository;
+        private readonly IBoardRepository boardRepository;
 
-        public BoardsController(IMapper mapper, IBoardRepository repository)
+        public BoardsController(
+            IMapper mapper,
+            IBoardRepository boardRepository)
         {
             this.mapper = mapper;
-            this.repository = repository;
+            this.boardRepository = boardRepository;
         }
 
         // GET: api/boards
@@ -33,7 +35,7 @@ namespace DevGames.API.Controllers
         {
             Log.Information("Endpoint - GET: api/boards");
 
-            var boards = repository.GetAll();
+            var boards = boardRepository.GetAll();
 
             Log.Information($"{boards.Count()} boards retrieved");
 
@@ -55,10 +57,10 @@ namespace DevGames.API.Controllers
         {
             Log.Information("Endpoint - GET: api/boards/{id}");
 
-            var board = repository.GetById(id);
+            var board = boardRepository.GetById(id);
 
             if (board == null)
-                return NotFound();
+                return NotFound("Board não encontrado.");
 
             return Ok(board);
         }
@@ -88,7 +90,7 @@ namespace DevGames.API.Controllers
 
             var board = mapper.Map<Board>(model);
 
-            repository.Add(board);
+            boardRepository.Add(board);
 
             return CreatedAtAction(nameof(GetById), new { id = board.Id }, model);
         }
@@ -117,14 +119,14 @@ namespace DevGames.API.Controllers
         {
             Log.Information("Endpoint - PUT: api/boards/{id}");
 
-            var board = repository.GetById(id);
+            var board = boardRepository.GetById(id);
 
             if (board == null)
-                return NotFound();
+                return NotFound("Board não encontrado.");
 
             board.Update(model.Description, model.Rules);
 
-            repository.Update(board);
+            boardRepository.Update(board);
 
             return NoContent();
         }

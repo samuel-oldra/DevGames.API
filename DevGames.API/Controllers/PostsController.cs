@@ -10,10 +10,17 @@ namespace DevGames.API.Controllers
     [Route("api/boards/{id}/[controller]")]
     public class PostsController : ControllerBase
     {
-        private readonly IPostRepository repository;
+        private readonly IPostRepository postRepository;
 
-        public PostsController(IPostRepository repository) =>
-            this.repository = repository;
+        private readonly IBoardRepository boardRepository;
+
+        public PostsController(
+            IPostRepository postRepository,
+            IBoardRepository boardRepository)
+        {
+            this.postRepository = postRepository;
+            this.boardRepository = boardRepository;
+        }
 
         // GET: api/boards/{id}/posts
         /// <summary>
@@ -28,7 +35,9 @@ namespace DevGames.API.Controllers
         {
             Log.Information("Endpoint - GET: api/boards/{id}/posts");
 
-            var posts = repository.GetAllByBoard(id);
+            var posts = postRepository.GetAllByBoard(id);
+
+            Log.Information($"{posts.Count()} posts retrieved");
 
             return Ok(posts);
         }
@@ -49,10 +58,10 @@ namespace DevGames.API.Controllers
         {
             Log.Information("Endpoint - GET: api/boards/{id}/posts/{postId}");
 
-            var post = repository.GetById(postId);
+            var post = postRepository.GetById(id, postId);
 
             if (post == null)
-                return NotFound();
+                return NotFound("Post não encontrado.");
 
             return Ok(post);
         }
@@ -74,16 +83,23 @@ namespace DevGames.API.Controllers
         /// <returns>Objeto criado</returns>
         /// <response code="201">Sucesso</response>
         /// <response code="400">Dados inválidos</response>
+        /// <response code="404">Não encontrado</response>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult Post(int id, AddPostInputModel model)
         {
             Log.Information("Endpoint - POST: api/boards/{id}/posts");
 
+            var boardExists = boardRepository.BoardExists(id);
+
+            if (!boardExists)
+                return NotFound("Board não encontrado.");
+
             var post = new Post(model.Title, model.Description, id);
 
-            repository.Add(post);
+            postRepository.Add(post);
 
             return CreatedAtAction(nameof(GetById), new { id = id, postId = post.Id }, model);
         }
@@ -114,14 +130,14 @@ namespace DevGames.API.Controllers
         {
             Log.Information("Endpoint - POST: api/boards/{id}/posts/{postId}/comments");
 
-            var postExists = repository.PostExists(postId);
+            var postExists = postRepository.PostExists(id, postId);
 
             if (!postExists)
-                return NotFound();
+                return NotFound("Post não encontrado.");
 
             var comment = new Comment(model.Title, model.Description, model.User, postId);
 
-            repository.AddComment(comment);
+            postRepository.AddComment(comment);
 
             return NoContent();
         }

@@ -6,12 +6,12 @@ namespace DevGames.API.Persistence.Repositories
     {
         IEnumerable<Post> GetAllByBoard(int boardId);
 
-        Post? GetById(int id);
+        Post? GetById(int boardId, int id);
 
         void Add(Post post);
 
         void AddComment(Comment comment);
 
-        bool PostExists(int postId);
+        bool PostExists(int boardId, int id);
     }
 }
