@@ -1,6 +1,7 @@
 using DevGames.API.Mappers;
 using DevGames.API.Persistence;
 using DevGames.API.Persistence.Repositories;
+using DevGames.API.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Serilog;
@@ -20,6 +21,7 @@ builder.Services.AddDbContext<DevGamesContext>(o => o.UseInMemoryDatabase("DevGa
 // Injeção de Dependência
 // Tipos: Transient, Scoped, Singleton
 // Padrão Repository
+builder.Services.AddScoped<IBoardService, BoardService>();
 builder.Services.AddScoped<IBoardRepository, BoardRepository>();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
 

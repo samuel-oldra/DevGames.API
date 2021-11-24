@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using DevGames.API.Entities;
 using DevGames.API.Models;
-using DevGames.API.Persistence.Repositories;
+using DevGames.API.Services;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 
@@ -13,14 +13,14 @@ namespace DevGames.API.Controllers
     {
         private readonly IMapper mapper;
 
-        private readonly IBoardRepository boardRepository;
+        private readonly IBoardService boardService;
 
         public BoardsController(
             IMapper mapper,
-            IBoardRepository boardRepository)
+            IBoardService boardService)
         {
             this.mapper = mapper;
-            this.boardRepository = boardRepository;
+            this.boardService = boardService;
         }
 
         // GET: api/boards
@@ -35,7 +35,7 @@ namespace DevGames.API.Controllers
         {
             Log.Information("Endpoint - GET: api/boards");
 
-            var boards = boardRepository.GetAll();
+            var boards = boardService.GetAll();
 
             Log.Information($"{boards.Count()} boards retrieved");
 
@@ -57,7 +57,7 @@ namespace DevGames.API.Controllers
         {
             Log.Information("Endpoint - GET: api/boards/{id}");
 
-            var board = boardRepository.GetById(id);
+            var board = boardService.GetById(id);
 
             if (board == null)
                 return NotFound("Board não encontrado.");
@@ -90,7 +90,7 @@ namespace DevGames.API.Controllers
 
             var board = mapper.Map<Board>(model);
 
-            boardRepository.Add(board);
+            boardService.Add(board);
 
             return CreatedAtAction(nameof(GetById), new { id = board.Id }, model);
         }
@@ -119,14 +119,14 @@ namespace DevGames.API.Controllers
         {
             Log.Information("Endpoint - PUT: api/boards/{id}");
 
-            var board = boardRepository.GetById(id);
+            var board = boardService.GetById(id);
 
             if (board == null)
                 return NotFound("Board não encontrado.");
 
             board.Update(model.Description, model.Rules);
 
-            boardRepository.Update(board);
+            boardService.Update(board);
 
             return NoContent();
         }
