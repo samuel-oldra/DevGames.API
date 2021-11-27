@@ -1,4 +1,6 @@
-﻿using DevGames.API.Models;
+﻿using AutoMapper;
+using DevGames.API.Entities;
+using DevGames.API.Models;
 using DevGames.API.Services;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
@@ -9,10 +11,17 @@ namespace DevGames.API.Controllers
     [Route("api/[controller]")]
     public class BoardsController : ControllerBase
     {
+        private readonly IMapper mapper;
+
         private readonly IBoardService boardService;
 
-        public BoardsController(IBoardService boardService) =>
+        public BoardsController(
+            IMapper mapper,
+            IBoardService boardService)
+        {
+            this.mapper = mapper;
             this.boardService = boardService;
+        }
 
         // GET: api/boards
         /// <summary>
@@ -79,7 +88,9 @@ namespace DevGames.API.Controllers
         {
             Log.Information("Endpoint - POST: api/boards");
 
-            var board = boardService.Add(model);
+            var board = mapper.Map<Board>(model);
+
+            board = boardService.Add(board);
 
             return CreatedAtAction(nameof(GetById), new { id = board.Id }, board);
         }
