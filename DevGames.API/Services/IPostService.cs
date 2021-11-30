@@ -8,7 +8,7 @@ namespace DevGames.API.Services
 
         Post? GetById(int boardId, int id);
 
-        void Add(Post post);
+        Post Add(Post post);
 
         void AddComment(Comment comment);
 

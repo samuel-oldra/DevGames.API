@@ -16,8 +16,12 @@ namespace DevGames.API.Services
         public Post? GetById(int boardId, int id) =>
             postRepository.GetById(boardId, id);
 
-        public void Add(Post post) =>
+        public Post Add(Post post)
+        {
             postRepository.Add(post);
+
+            return post;
+        }
 
         public void AddComment(Comment comment) =>
             postRepository.AddComment(comment);
