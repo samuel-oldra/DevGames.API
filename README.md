@@ -14,6 +14,7 @@ Foi desenvolvida uma API REST completa de gerenciamento de boards, posts e comen
 - Programação Orientada a Objetos
 - Padrão Repository
 - Logs com Serilog
+- Testes com xUnit, AutoFixture, Moq e Shouldly
 - Clean Code
 - Publicação
 
