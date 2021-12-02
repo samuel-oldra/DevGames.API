@@ -12,11 +12,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 // PARA ACESSO AO BANCO EM MEMÓRIA
-builder.Services.AddDbContext<DevGamesContext>(o => o.UseInMemoryDatabase("DevGamesDb"));
+// builder.Services.AddDbContext<DevGamesContext>(o => o.UseInMemoryDatabase("DevGamesDb"));
 
-// PARA ACESSO AO SQL Server
-// var connectionString = builder.Configuration.GetConnectionString("DevGamesCs");
-// builder.Services.AddDbContext<DevGamesContext>(o => o.UseSqlServer(connectionString));
+// PARA ACESSO AO SQLite
+var connectionString = builder.Configuration.GetConnectionString("DevGamesCs");
+builder.Services.AddDbContext<DevGamesContext>(o => o.UseSqlite(connectionString));
 
 // Injeção de Dependência
 // Tipos: Transient, Scoped, Singleton

@@ -7,7 +7,7 @@ Foi desenvolvida uma API REST completa de gerenciamento de boards, posts e comen
 ## Tecnologias e práticas utilizadas
 - ASP.NET Core com .NET 6
 - Entity Framework Core
-- SQL Server / In-Memory database
+- SQLite / In-Memory database
 - Swagger
 - AutoMapper
 - Injeção de Dependência
