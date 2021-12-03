@@ -34,6 +34,7 @@ dotnet new webapi -o DevGames.API
 dotnet build
 dotnet run
 dotnet watch run
+dotnet test
 dotnet publish
 ```
 
