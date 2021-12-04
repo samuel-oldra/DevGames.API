@@ -124,7 +124,7 @@ namespace DevGames.API.Controllers
             if (board == null)
                 return NotFound("Board não encontrado.");
 
-            boardService.Update(board, model);
+            board = boardService.Update(board, model);
 
             return NoContent();
         }
