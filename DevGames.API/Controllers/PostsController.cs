@@ -135,9 +135,7 @@ namespace DevGames.API.Controllers
             if (!postExists)
                 return NotFound("Post não encontrado.");
 
-            var comment = new Comment(model.Title, model.Description, model.User, postId);
-
-            postService.AddComment(comment);
+            var comment = postService.AddComment(postId, model);
 
             return NoContent();
         }

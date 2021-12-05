@@ -1,5 +1,6 @@
 using AutoFixture;
 using DevGames.API.Entities;
+using DevGames.API.Models;
 using DevGames.API.Persistence.Repositories;
 using DevGames.API.Services;
 using Moq;
@@ -35,6 +36,32 @@ namespace DevGames.API.Tests
             addedPost.CreatedAt.ShouldBe(post.CreatedAt);
 
             postRepositoryMock.Verify(pr => pr.Add(It.IsAny<Post>()), Times.Once);
+        }
+
+        [Fact]
+        public void AddComment()
+        {
+            // Arrange
+            var postId = new Fixture().Create<int>();
+            var addCommentInputModel = new Fixture().Create<AddCommentInputModel>();
+
+            var postRepositoryMock = new Mock<IPostRepository>();
+
+            var postService = new PostService(postRepositoryMock.Object);
+
+            // Act
+            var addedComment = postService.AddComment(postId, addCommentInputModel);
+
+            // Assert
+            Assert.Equal(addedComment.Title, addCommentInputModel.Title);
+            Assert.Equal(addedComment.Description, addCommentInputModel.Description);
+            Assert.Equal(addedComment.User, addCommentInputModel.User);
+
+            addedComment.Title.ShouldBe(addCommentInputModel.Title);
+            addedComment.Description.ShouldBe(addCommentInputModel.Description);
+            addedComment.User.ShouldBe(addCommentInputModel.User);
+
+            postRepositoryMock.Verify(pr => pr.AddComment(It.IsAny<Comment>()), Times.Once);
         }
     }
 }
