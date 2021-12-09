@@ -12,6 +12,41 @@ namespace DevGames.API.Tests
     public class PostTest
     {
         [Fact]
+        public void GetAllByBoard()
+        {
+            // Arrange
+            var boardId = new Fixture().Create<int>();
+
+            var postRepositoryMock = new Mock<IPostRepository>();
+
+            var postService = new PostService(postRepositoryMock.Object);
+
+            // Act
+            var posts = postService.GetAllByBoard(boardId);
+
+            // Assert
+            postRepositoryMock.Verify(pr => pr.GetAllByBoard(It.IsAny<int>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetById()
+        {
+            // Arrange
+            var boardId = new Fixture().Create<int>();
+            var postId = new Fixture().Create<int>();
+
+            var postRepositoryMock = new Mock<IPostRepository>();
+
+            var postService = new PostService(postRepositoryMock.Object);
+
+            // Act
+            var post = postService.GetById(boardId, postId);
+
+            // Assert
+            postRepositoryMock.Verify(pr => pr.GetById(It.IsAny<int>(), It.IsAny<int>()), Times.Once);
+        }
+
+        [Fact]
         public void Add()
         {
             // Arrange
@@ -62,6 +97,24 @@ namespace DevGames.API.Tests
             addedComment.User.ShouldBe(addCommentInputModel.User);
 
             postRepositoryMock.Verify(pr => pr.AddComment(It.IsAny<Comment>()), Times.Once);
+        }
+
+        [Fact]
+        public void PostExists()
+        {
+            // Arrange
+            var boardId = new Fixture().Create<int>();
+            var postId = new Fixture().Create<int>();
+
+            var postRepositoryMock = new Mock<IPostRepository>();
+
+            var postService = new PostService(postRepositoryMock.Object);
+
+            // Act
+            var postExists = postService.PostExists(boardId, postId);
+
+            // Assert
+            postRepositoryMock.Verify(pr => pr.PostExists(It.IsAny<int>(), It.IsAny<int>()), Times.Once);
         }
     }
 }
