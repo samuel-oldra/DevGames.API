@@ -9,7 +9,7 @@ using Xunit;
 
 namespace DevGames.API.Tests
 {
-    public class PostTest
+    public class PostServiceTest
     {
         [Fact]
         public void GetAllByBoard()
