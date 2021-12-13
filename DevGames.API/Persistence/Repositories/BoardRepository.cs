@@ -7,14 +7,14 @@ namespace DevGames.API.Persistence.Repositories
     {
         private readonly DevGamesContext context;
 
-        public BoardRepository(DevGamesContext context) =>
-            this.context = context;
+        public BoardRepository(DevGamesContext context)
+            => this.context = context;
 
-        public IEnumerable<Board> GetAll() =>
-            context.Boards.ToList();
+        public IEnumerable<Board> GetAll()
+            => context.Boards.ToList();
 
-        public Board? GetById(int id) =>
-            context.Boards.Include(b => b.Posts).SingleOrDefault(b => b.Id == id);
+        public Board? GetById(int id)
+            => context.Boards.Include(b => b.Posts).SingleOrDefault(b => b.Id == id);
 
         public void Add(Board board)
         {
@@ -28,7 +28,7 @@ namespace DevGames.API.Persistence.Repositories
             context.SaveChanges();
         }
 
-        public bool BoardExists(int id) =>
-            context.Boards.Any(b => b.Id == id);
+        public bool BoardExists(int id)
+            => context.Boards.Any(b => b.Id == id);
     }
 }

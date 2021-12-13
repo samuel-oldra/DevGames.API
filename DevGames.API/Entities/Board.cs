@@ -30,7 +30,7 @@
             Rules = rules;
         }
 
-        public void AddPost(Post post) =>
-            Posts.Add(post);
+        public void AddPost(Post post)
+            => Posts.Add(post);
     }
 }
