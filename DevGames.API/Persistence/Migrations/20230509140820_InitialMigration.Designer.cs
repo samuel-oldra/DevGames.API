@@ -11,13 +11,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DevGames.API.Persistence.Migrations
 {
     [DbContext(typeof(DevGamesContext))]
-    [Migration("20220902133725_InitialMigration")]
+    [Migration("20230509140820_InitialMigration")]
     partial class InitialMigration
     {
+        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "6.0.8");
+            modelBuilder.HasAnnotation("ProductVersion", "7.0.5");
 
             modelBuilder.Entity("DevGames.API.Entities.Board", b =>
                 {
