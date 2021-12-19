@@ -25,6 +25,10 @@ namespace DevGames.API.Tests
             var posts = postService.GetAllByBoard(boardId);
 
             // Assert
+            Assert.NotNull(posts);
+
+            posts.ShouldNotBeNull();
+
             postRepositoryMock.Verify(pr => pr.GetAllByBoard(It.IsAny<int>()), Times.Once);
         }
 
@@ -32,17 +36,22 @@ namespace DevGames.API.Tests
         public void GetById()
         {
             // Arrange
-            var boardId = new Fixture().Create<int>();
-            var postId = new Fixture().Create<int>();
+            var addPost = new Fixture().Create<Post>();
 
             var postRepositoryMock = new Mock<IPostRepository>();
 
             var postService = new PostService(postRepositoryMock.Object);
 
             // Act
-            var post = postService.GetById(boardId, postId);
+            var addedPost = postService.Add(addPost);
+            var post = postService.GetById(addedPost.BoardId, addedPost.Id);
 
             // Assert
+            Assert.NotNull(addedPost);
+
+            addedPost.ShouldNotBeNull();
+
+            postRepositoryMock.Verify(pr => pr.Add(It.IsAny<Post>()), Times.Once);
             postRepositoryMock.Verify(pr => pr.GetById(It.IsAny<int>(), It.IsAny<int>()), Times.Once);
         }
 
@@ -50,25 +59,27 @@ namespace DevGames.API.Tests
         public void Add()
         {
             // Arrange
-            var post = new Fixture().Create<Post>();
+            var addPost = new Fixture().Create<Post>();
 
             var postRepositoryMock = new Mock<IPostRepository>();
 
             var postService = new PostService(postRepositoryMock.Object);
 
             // Act
-            var addedPost = postService.Add(post);
+            var addedPost = postService.Add(addPost);
 
             // Assert
-            Assert.Equal(addedPost.Title, post.Title);
-            Assert.Equal(addedPost.Description, post.Description);
-            Assert.Equal(addedPost.BoardId, post.BoardId);
-            Assert.Equal(addedPost.CreatedAt, post.CreatedAt);
+            Assert.NotNull(addedPost);
+            Assert.Equal(addedPost.Title, addPost.Title);
+            Assert.Equal(addedPost.Description, addPost.Description);
+            Assert.Equal(addedPost.BoardId, addPost.BoardId);
+            Assert.Equal(addedPost.CreatedAt, addPost.CreatedAt);
 
-            addedPost.Title.ShouldBe(post.Title);
-            addedPost.Description.ShouldBe(post.Description);
-            addedPost.BoardId.ShouldBe(post.BoardId);
-            addedPost.CreatedAt.ShouldBe(post.CreatedAt);
+            addedPost.ShouldNotBeNull();
+            addedPost.Title.ShouldBe(addPost.Title);
+            addedPost.Description.ShouldBe(addPost.Description);
+            addedPost.BoardId.ShouldBe(addPost.BoardId);
+            addedPost.CreatedAt.ShouldBe(addPost.CreatedAt);
 
             postRepositoryMock.Verify(pr => pr.Add(It.IsAny<Post>()), Times.Once);
         }
@@ -77,7 +88,7 @@ namespace DevGames.API.Tests
         public void AddComment()
         {
             // Arrange
-            var postId = new Fixture().Create<int>();
+            var addPost = new Fixture().Create<Post>();
             var addCommentInputModel = new Fixture().Create<AddCommentInputModel>();
 
             var postRepositoryMock = new Mock<IPostRepository>();
@@ -85,17 +96,25 @@ namespace DevGames.API.Tests
             var postService = new PostService(postRepositoryMock.Object);
 
             // Act
-            var addedComment = postService.AddComment(postId, addCommentInputModel);
+            var addedPost = postService.Add(addPost);
+            var addedComment = postService.AddComment(addedPost.Id, addCommentInputModel);
 
             // Assert
+            Assert.NotNull(addedPost);
+            Assert.NotNull(addedComment);
             Assert.Equal(addedComment.Title, addCommentInputModel.Title);
             Assert.Equal(addedComment.Description, addCommentInputModel.Description);
             Assert.Equal(addedComment.User, addCommentInputModel.User);
+            Assert.Equal(addedComment.PostId, addedPost.Id);
 
+            addedPost.ShouldNotBeNull();
+            addedComment.ShouldNotBeNull();
             addedComment.Title.ShouldBe(addCommentInputModel.Title);
             addedComment.Description.ShouldBe(addCommentInputModel.Description);
             addedComment.User.ShouldBe(addCommentInputModel.User);
+            addedComment.PostId.ShouldBe(addedPost.Id);
 
+            postRepositoryMock.Verify(pr => pr.Add(It.IsAny<Post>()), Times.Once);
             postRepositoryMock.Verify(pr => pr.AddComment(It.IsAny<Comment>()), Times.Once);
         }
 
@@ -103,17 +122,26 @@ namespace DevGames.API.Tests
         public void PostExists()
         {
             // Arrange
-            var boardId = new Fixture().Create<int>();
-            var postId = new Fixture().Create<int>();
+            var addPost = new Fixture().Create<Post>();
 
             var postRepositoryMock = new Mock<IPostRepository>();
 
             var postService = new PostService(postRepositoryMock.Object);
 
             // Act
-            var postExists = postService.PostExists(boardId, postId);
+            var addedPost = postService.Add(addPost);
+            var postExists = postService.PostExists(addedPost.BoardId, addedPost.Id);
 
             // Assert
+            Assert.NotNull(addedPost);
+
+            addedPost.ShouldNotBeNull();
+
+            // TODO: Verify if post exists
+            // Assert.True(postExists);
+            // postExists.ShouldBe(true);
+
+            postRepositoryMock.Verify(pr => pr.Add(It.IsAny<Post>()), Times.Once);
             postRepositoryMock.Verify(pr => pr.PostExists(It.IsAny<int>(), It.IsAny<int>()), Times.Once);
         }
     }
