@@ -5,12 +5,13 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container. 01.16.00
-//builder.Services.AddDbContext<DevGamesContext>(o => o.UseInMemoryDatabase("DevGamesCs"));
-
-var connectionString = builder.Configuration.GetConnectionString("DevGamesDb");
-builder.Services.AddDbContext<DevGamesContext>(o => o.UseSqlServer(connectionString));
-
-builder.Services.AddAutoMapper(typeof(BoardMapper)); // Configura AutoMapper
+// PARA ACESSO AO BANCO EM MEMÓRIA
+builder.Services.AddDbContext<DevGamesContext>(o => o.UseInMemoryDatabase("DevGamesDb"));
+// PARA ACESSO AO SQL Server
+// var connectionString = builder.Configuration.GetConnectionString("DevGamesCs");
+// builder.Services.AddDbContext<DevGamesContext>(o => o.UseSqlServer(connectionString));
+// Configura AutoMapper
+builder.Services.AddAutoMapper(typeof(BoardMapper));
 builder.Services.AddControllers();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
