@@ -1,4 +1,6 @@
-﻿using DevGames.API.Models;
+﻿using DevGames.API.Entities;
+using DevGames.API.Models;
+using DevGames.API.Persistence;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DevGames.API.Controllers
@@ -7,26 +9,39 @@ namespace DevGames.API.Controllers
     [ApiController]
     public class BoardsController : ControllerBase
     {
+        private readonly DevGamesContext context;
+
+        public BoardsController(DevGamesContext context)
+        {
+            this.context = context;
+        }
+
         // GET: api/boards
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Ok();
+            return Ok(context.Boards);
         }
 
         // GET: api/boards/1
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            // NotFound()
+            var board = context.Boards.SingleOrDefault(b => b.Id == id);
 
-            return Ok();
+            if (board == null) return NotFound();
+
+            return Ok(board);
         }
 
         // POST: api/boards
         [HttpPost]
         public IActionResult Post(AddBoardInputModel model)
         {
+            var board = new Board(model.Id, model.GameTitle, model.Description, model.Rules);
+
+            context.Boards.Add(board);
+
             return CreatedAtAction(nameof(GetById), new { id = model.Id }, model);
         }
 
@@ -34,13 +49,12 @@ namespace DevGames.API.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, UpdateBoardInputModel model)
         {
-            return NoContent();
-        }
+            var board = context.Boards.SingleOrDefault(b => b.Id == id);
 
-        // DELETE: api/boards/1
-        [HttpDelete("id")]
-        public IActionResult Delete(int id)
-        {
+            if (board == null) return NotFound();
+
+            board.Update(model.Description, model.Rules);
+
             return NoContent();
         }
     }
