@@ -3,6 +3,7 @@ using DevGames.API.Entities;
 using DevGames.API.Models;
 using DevGames.API.Persistence.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 
 namespace DevGames.API.Controllers
 {
@@ -24,6 +25,8 @@ namespace DevGames.API.Controllers
         public IActionResult GetAll()
         {
             var boards = repository.GetAll();
+
+            Log.Information($"{boards.Count()} boards retrieved");
 
             return Ok(boards);
         }
