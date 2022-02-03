@@ -12,6 +12,7 @@ namespace DevGames.API.Controllers
     public class BoardsController : ControllerBase
     {
         private readonly IMapper mapper;
+
         private readonly IBoardRepository repository;
 
         public BoardsController(IMapper mapper, IBoardRepository repository)
@@ -24,6 +25,8 @@ namespace DevGames.API.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
+            Log.Information("Endpoint - GET: api/boards");
+
             var boards = repository.GetAll();
 
             Log.Information($"{boards.Count()} boards retrieved");
@@ -35,6 +38,8 @@ namespace DevGames.API.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
+            Log.Information("Endpoint - GET: api/boards/1");
+
             var board = repository.GetById(id);
 
             if (board == null) return NotFound();
@@ -62,6 +67,8 @@ namespace DevGames.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult Post(AddBoardInputModel model)
         {
+            Log.Information("Endpoint - POST: api/boards");
+
             var board = mapper.Map<Board>(model);
 
             repository.Add(board);
@@ -73,6 +80,8 @@ namespace DevGames.API.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, UpdateBoardInputModel model)
         {
+            Log.Information("Endpoint - PUT: api/boards/1");
+
             var board = repository.GetById(id);
 
             if (board == null) return NotFound();

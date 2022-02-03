@@ -2,6 +2,7 @@
 using DevGames.API.Models;
 using DevGames.API.Persistence.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 
 namespace DevGames.API.Controllers
 {
@@ -22,6 +23,8 @@ namespace DevGames.API.Controllers
         [HttpGet]
         public IActionResult GetAll(int id)
         {
+            Log.Information("Endpoint - GET: api/boards/1/posts");
+
             var posts = repository.GetAllByBoard(id);
 
             return Ok(posts);
@@ -31,6 +34,8 @@ namespace DevGames.API.Controllers
         [HttpGet("{postId}")]
         public IActionResult GetById(int id, int postId)
         {
+            Log.Information("Endpoint - GET: api/boards/1/posts/2");
+
             var post = repository.GetById(postId);
 
             if (post == null) return NotFound();
@@ -42,6 +47,8 @@ namespace DevGames.API.Controllers
         [HttpPost]
         public IActionResult Post(int id, AddPostInputModel model)
         {
+            Log.Information("Endpoint - POST: api/boards/1/posts");
+
             var post = new Post(model.Title, model.Description, id);
 
             repository.Add(post);
@@ -53,6 +60,8 @@ namespace DevGames.API.Controllers
         [HttpPost("{postId}/comments")]
         public async Task<IActionResult> PostComment(int id, int postId, AddCommentInputModel model)
         {
+            Log.Information("Endpoint - POST: api/boards/1/posts/2/comments");
+
             var postExists = repository.PostExists(postId);
 
             if (!postExists) return NotFound();
