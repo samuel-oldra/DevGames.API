@@ -34,11 +34,11 @@ namespace DevGames.API.Controllers
             return Ok(boards);
         }
 
-        // GET: api/boards/1
+        // GET: api/boards/{id}
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            Log.Information("Endpoint - GET: api/boards/1");
+            Log.Information("Endpoint - GET: api/boards/{id}");
 
             var board = repository.GetById(id);
 
@@ -76,11 +76,11 @@ namespace DevGames.API.Controllers
             return CreatedAtAction(nameof(GetById), new { id = board.Id }, model);
         }
 
-        // PUT: api/boards/1
+        // PUT: api/boards/{id}
         [HttpPut("{id}")]
         public IActionResult Put(int id, UpdateBoardInputModel model)
         {
-            Log.Information("Endpoint - PUT: api/boards/1");
+            Log.Information("Endpoint - PUT: api/boards/{id}");
 
             var board = repository.GetById(id);
 
