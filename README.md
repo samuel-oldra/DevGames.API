@@ -25,6 +25,14 @@ Foi desenvolvida uma API REST completa de gerenciamento de boards, posts e comen
 
 ![alt text](https://raw.githubusercontent.com/samuel-oldra/DevGames.API/main/README_IMGS/swagger_ui.png)
 
+## Comandos básicos
+```
+dotnet build
+dotnet run
+dotnet watch run
+dotnet publish
+```
+
 ## Tool Entity Framework Core (migrations)
 ```
 dotnet tool install --global dotnet-ef
