@@ -22,7 +22,13 @@ namespace DevGames.API.Controllers
         }
 
         // GET: api/boards
+        /// <summary>
+        /// Listagem de Boards
+        /// </summary>
+        /// <returns>Lista de Boards</returns>
+        /// <response code="200">Sucesso</response>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public IActionResult GetAll()
         {
             Log.Information("Endpoint - GET: api/boards");
@@ -35,7 +41,16 @@ namespace DevGames.API.Controllers
         }
 
         // GET: api/boards/{id}
+        /// <summary>
+        /// Detalhes do Board
+        /// </summary>
+        /// <param name="id">ID do Board</param>
+        /// <returns>Lista um Board</returns>
+        /// <response code="200">Sucesso</response>
+        /// <response code="404">Não encontrado</response>
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetById(int id)
         {
             Log.Information("Endpoint - GET: api/boards/{id}");
@@ -47,15 +62,16 @@ namespace DevGames.API.Controllers
             return Ok(board);
         }
 
+        // POST: api/boards
         /// <summary>
-        /// Post Board
+        /// Cadastro de Board
         /// </summary>
         /// <remarks>
-        /// Request Body Example:
+        /// Requisição:
         /// {
-        /// "gameTitle": "Mario Kart",
-        /// "description": "Jogo de corrida divertido",
-        /// "rules": "Corra, ultrapasse e use os itens especiais"
+        ///     "gameTitle": "Mario Kart",
+        ///     "description": "Jogo de corrida divertido",
+        ///     "rules": "Corra, ultrapasse e use os itens especiais"
         /// }
         /// </remarks>
         /// <param name="model">Dados do Board</param>
@@ -77,7 +93,26 @@ namespace DevGames.API.Controllers
         }
 
         // PUT: api/boards/{id}
+        /// <summary>
+        /// Atualiza um Board
+        /// </summary>
+        /// <remarks>
+        /// Requisição:
+        /// {
+        ///     "description": "Jogo de corrida frenético",
+        ///     "rules": "Corra, ultrapasse, use os itens especiais e descubra atalhos"
+        /// }
+        /// </remarks>
+        /// <param name="id">ID do Board</param>
+        /// <param name="model">Dados do Board</param>
+        /// <returns>Objeto atualizado</returns>
+        /// <response code="204">Sucesso</response>
+        /// <response code="400">Dados inválidos</response>
+        /// <response code="404">Não encontrado</response>
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult Put(int id, UpdateBoardInputModel model)
         {
             Log.Information("Endpoint - PUT: api/boards/{id}");
