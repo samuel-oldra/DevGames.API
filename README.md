@@ -28,6 +28,7 @@ Foi desenvolvida uma API REST completa de gerenciamento de boards, posts e comen
 
 ## Comandos básicos
 ```
+dotnet new gitignore
 dotnet new webapi -o DevGames.API
 dotnet build
 dotnet run
