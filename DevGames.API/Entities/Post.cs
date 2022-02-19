@@ -24,6 +24,7 @@
             Comments = new List<Comment>();
         }
 
-        public void AddCommet(Comment comment) => Comments.Add(comment);
+        public void AddCommet(Comment comment) =>
+            Comments.Add(comment);
     }
 }

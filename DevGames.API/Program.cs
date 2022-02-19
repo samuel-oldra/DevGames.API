@@ -10,27 +10,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-// Serilog
-builder.Host.ConfigureAppConfiguration((hostingContext, config) =>
-{
-    var settings = config.Build();
-    Serilog.Log.Logger = new LoggerConfiguration()
-        .Enrich.FromLogContext()
-
-        // PARA LOG NO SQL Server
-        //.WriteTo.MSSqlServer(settings.GetConnectionString("DevGamesCs"),
-        //sinkOptions: new MSSqlServerSinkOptions()
-        //{
-        //    AutoCreateSqlTable = true,
-        //    TableName = "Logs"
-        //})
-
-        // PARA LOG NO CONSOLE
-        .WriteTo.Console()
-
-        .CreateLogger();
-}).UseSerilog();
-
 // PARA ACESSO AO BANCO EM MEMÓRIA
 builder.Services.AddDbContext<DevGamesContext>(o => o.UseInMemoryDatabase("DevGamesDb"));
 
@@ -38,9 +17,8 @@ builder.Services.AddDbContext<DevGamesContext>(o => o.UseInMemoryDatabase("DevGa
 // var connectionString = builder.Configuration.GetConnectionString("DevGamesCs");
 // builder.Services.AddDbContext<DevGamesContext>(o => o.UseSqlServer(connectionString));
 
-// Configura AutoMapper
-builder.Services.AddAutoMapper(typeof(BoardMapper));
-
+// Injeção de Dependência
+// Tipos: Transient, Scoped, Singleton
 // Padrão Repository
 builder.Services.AddScoped<IBoardRepository, BoardRepository>();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
@@ -68,6 +46,30 @@ builder.Services.AddSwaggerGen(o =>
     o.IncludeXmlComments(xmlPath);
 });
 
+// AutoMapper
+builder.Services.AddAutoMapper(typeof(BoardMapper));
+
+// Serilog
+builder.Host.ConfigureAppConfiguration((hostingContext, config) =>
+{
+    Serilog.Log.Logger = new LoggerConfiguration()
+        .Enrich.FromLogContext()
+
+        // PARA LOG NO SQL Server
+        //.WriteTo.MSSqlServer(
+        //    connectionString,
+        //    sinkOptions: new MSSqlServerSinkOptions()
+        //    {
+        //        AutoCreateSqlTable = true,
+        //        TableName = "Logs"
+        //    })
+
+        // PARA LOG NO CONSOLE
+        .WriteTo.Console()
+
+        .CreateLogger();
+}).UseSerilog();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -75,7 +77,11 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(o =>
+    {
+        o.RoutePrefix = string.Empty;
+        o.SwaggerEndpoint("/swagger/v1/swagger.json", "DevGames.API v1");
+    });
 }
 
 app.UseHttpsRedirection();

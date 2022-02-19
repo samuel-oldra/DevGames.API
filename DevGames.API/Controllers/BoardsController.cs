@@ -57,7 +57,8 @@ namespace DevGames.API.Controllers
 
             var board = repository.GetById(id);
 
-            if (board == null) return NotFound();
+            if (board == null)
+                return NotFound();
 
             return Ok(board);
         }
@@ -119,7 +120,8 @@ namespace DevGames.API.Controllers
 
             var board = repository.GetById(id);
 
-            if (board == null) return NotFound();
+            if (board == null)
+                return NotFound();
 
             board.Update(model.Description, model.Rules);
 
