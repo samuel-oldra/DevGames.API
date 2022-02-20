@@ -106,7 +106,6 @@ namespace DevGames.API.Controllers
         /// </remarks>
         /// <param name="id">ID do Board</param>
         /// <param name="model">Dados do Board</param>
-        /// <returns>Objeto atualizado</returns>
         /// <response code="204">Sucesso</response>
         /// <response code="400">Dados inválidos</response>
         /// <response code="404">Não encontrado</response>
