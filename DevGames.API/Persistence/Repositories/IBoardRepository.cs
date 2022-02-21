@@ -11,5 +11,7 @@ namespace DevGames.API.Persistence.Repositories
         void Add(Board board);
 
         void Update(Board board);
+
+        bool BoardExists(int id);
     }
 }
