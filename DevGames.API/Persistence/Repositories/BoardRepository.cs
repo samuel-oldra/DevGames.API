@@ -29,6 +29,6 @@ namespace DevGames.API.Persistence.Repositories
         }
 
         public bool BoardExists(int id) =>
-            context.Boards.Any(p => p.Id == id);
+            context.Boards.Any(b => b.Id == id);
     }
 }

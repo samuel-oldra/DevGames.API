@@ -8,9 +8,9 @@
 
         public string Description { get; private set; }
 
-        public DateTime CreatedAt { get; private set; }
-
         public int BoardId { get; private set; }
+
+        public DateTime CreatedAt { get; private set; }
 
         public List<Comment> Comments { get; private set; }
 

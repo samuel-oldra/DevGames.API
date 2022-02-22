@@ -10,9 +10,9 @@
 
         public string User { get; private set; }
 
-        public DateTime CreatedAt { get; private set; }
-
         public int PostId { get; private set; }
+
+        public DateTime CreatedAt { get; private set; }
 
         public Comment(string title, string description, string user, int postId)
         {
