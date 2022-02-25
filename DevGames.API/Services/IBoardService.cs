@@ -1,4 +1,5 @@
 using DevGames.API.Entities;
+using DevGames.API.Models;
 
 namespace DevGames.API.Services
 {
@@ -8,8 +9,8 @@ namespace DevGames.API.Services
 
         Board? GetById(int id);
 
-        void Add(Board board);
+        Board Add(AddBoardInputModel model);
 
-        void Update(Board board);
+        void Update(Board board, UpdateBoardInputModel model);
     }
 }
