@@ -9,7 +9,7 @@ namespace DevGames.API.Services
 
         Board? GetById(int id);
 
-        Board Add(AddBoardInputModel model);
+        Board Add(Board board);
 
         void Update(Board board, UpdateBoardInputModel model);
     }
