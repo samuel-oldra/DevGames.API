@@ -14,27 +14,23 @@ namespace DevGames.API.Tests
         public void Add()
         {
             // Arrange
-            var addBoard = new Fixture().Create<Board>();
+            var board = new Fixture().Create<Board>();
 
-            //var mapperMock = new Mock<IMapper>();
             var boardRepositoryMock = new Mock<IBoardRepository>();
 
             var boardService = new BoardService(boardRepositoryMock.Object);
 
             // Act
-            var result = boardService.Add(addBoard);
-
-            //var result2 = boardService.GetById(result.Id);
-            //Assert.Equal(addBoard.GameTitle, result2.GameTitle); // Board?
+            var addedBoard = boardService.Add(board);
 
             // Assert
-            Assert.Equal(addBoard.GameTitle, result.GameTitle);
-            Assert.Equal(addBoard.Description, result.Description);
-            Assert.Equal(addBoard.Rules, result.Rules);
+            Assert.Equal(addedBoard.GameTitle, board.GameTitle);
+            Assert.Equal(addedBoard.Description, board.Description);
+            Assert.Equal(addedBoard.Rules, board.Rules);
 
-            result.GameTitle.ShouldBe(addBoard.GameTitle);
-            result.Description.ShouldBe(addBoard.Description);
-            result.Rules.ShouldBe(addBoard.Rules);
+            addedBoard.GameTitle.ShouldBe(board.GameTitle);
+            addedBoard.Description.ShouldBe(board.Description);
+            addedBoard.Rules.ShouldBe(board.Rules);
 
             boardRepositoryMock.Verify(br => br.Add(It.IsAny<Board>()), Times.Once);
         }
