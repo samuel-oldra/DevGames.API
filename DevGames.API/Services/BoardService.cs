@@ -30,5 +30,8 @@ namespace DevGames.API.Services
 
             boardRepository.Update(board);
         }
+
+        public bool BoardExists(int id) =>
+            boardRepository.BoardExists(id);
     }
 }

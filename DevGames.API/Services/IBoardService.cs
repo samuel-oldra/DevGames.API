@@ -12,5 +12,7 @@ namespace DevGames.API.Services
         Board Add(Board board);
 
         void Update(Board board, UpdateBoardInputModel model);
+
+        bool BoardExists(int id);
     }
 }

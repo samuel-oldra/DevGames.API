@@ -23,6 +23,7 @@ builder.Services.AddDbContext<DevGamesContext>(o => o.UseInMemoryDatabase("DevGa
 // Padrão Repository
 builder.Services.AddScoped<IBoardService, BoardService>();
 builder.Services.AddScoped<IBoardRepository, BoardRepository>();
+builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
 
 builder.Services.AddControllers();

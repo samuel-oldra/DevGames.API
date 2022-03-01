@@ -1,6 +1,6 @@
 ﻿using DevGames.API.Entities;
 using DevGames.API.Models;
-using DevGames.API.Persistence.Repositories;
+using DevGames.API.Services;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 
@@ -10,16 +10,16 @@ namespace DevGames.API.Controllers
     [Route("api/boards/{id}/[controller]")]
     public class PostsController : ControllerBase
     {
-        private readonly IPostRepository postRepository;
+        private readonly IPostService postService;
 
-        private readonly IBoardRepository boardRepository;
+        private readonly IBoardService boardService;
 
         public PostsController(
-            IPostRepository postRepository,
-            IBoardRepository boardRepository)
+            IPostService postService,
+            IBoardService boardService)
         {
-            this.postRepository = postRepository;
-            this.boardRepository = boardRepository;
+            this.postService = postService;
+            this.boardService = boardService;
         }
 
         // GET: api/boards/{id}/posts
@@ -35,7 +35,7 @@ namespace DevGames.API.Controllers
         {
             Log.Information("Endpoint - GET: api/boards/{id}/posts");
 
-            var posts = postRepository.GetAllByBoard(id);
+            var posts = postService.GetAllByBoard(id);
 
             Log.Information($"{posts.Count()} posts retrieved");
 
@@ -58,7 +58,7 @@ namespace DevGames.API.Controllers
         {
             Log.Information("Endpoint - GET: api/boards/{id}/posts/{postId}");
 
-            var post = postRepository.GetById(id, postId);
+            var post = postService.GetById(id, postId);
 
             if (post == null)
                 return NotFound("Post não encontrado.");
@@ -92,14 +92,14 @@ namespace DevGames.API.Controllers
         {
             Log.Information("Endpoint - POST: api/boards/{id}/posts");
 
-            var boardExists = boardRepository.BoardExists(id);
+            var boardExists = boardService.BoardExists(id);
 
             if (!boardExists)
                 return NotFound("Board não encontrado.");
 
             var post = new Post(model.Title, model.Description, id);
 
-            postRepository.Add(post);
+            postService.Add(post);
 
             return CreatedAtAction(nameof(GetById), new { id = id, postId = post.Id }, model);
         }
@@ -130,14 +130,14 @@ namespace DevGames.API.Controllers
         {
             Log.Information("Endpoint - POST: api/boards/{id}/posts/{postId}/comments");
 
-            var postExists = postRepository.PostExists(id, postId);
+            var postExists = postService.PostExists(id, postId);
 
             if (!postExists)
                 return NotFound("Post não encontrado.");
 
             var comment = new Comment(model.Title, model.Description, model.User, postId);
 
-            postRepository.AddComment(comment);
+            postService.AddComment(comment);
 
             return NoContent();
         }
