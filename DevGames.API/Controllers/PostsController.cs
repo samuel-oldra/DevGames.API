@@ -99,7 +99,7 @@ namespace DevGames.API.Controllers
 
             var post = new Post(model.Title, model.Description, id);
 
-            postService.Add(post);
+            post = postService.Add(post);
 
             return CreatedAtAction(nameof(GetById), new { id = id, postId = post.Id }, model);
         }
