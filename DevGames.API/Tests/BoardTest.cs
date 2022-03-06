@@ -1,5 +1,6 @@
 using AutoFixture;
 using DevGames.API.Entities;
+using DevGames.API.Models;
 using DevGames.API.Persistence.Repositories;
 using DevGames.API.Services;
 using Moq;
@@ -33,6 +34,33 @@ namespace DevGames.API.Tests
             addedBoard.Rules.ShouldBe(board.Rules);
 
             boardRepositoryMock.Verify(br => br.Add(It.IsAny<Board>()), Times.Once);
+        }
+
+        [Fact]
+        public void Update()
+        {
+            // Arrange
+            var board = new Fixture().Create<Board>();
+            var updateBoardInputModel = new Fixture().Create<UpdateBoardInputModel>();
+
+            var boardRepositoryMock = new Mock<IBoardRepository>();
+
+            var boardService = new BoardService(boardRepositoryMock.Object);
+
+            // Act
+            var addedBoard = boardService.Add(board);
+            var updatedBoard = boardService.Update(addedBoard, updateBoardInputModel);
+
+            // Assert
+            Assert.Equal(updatedBoard.GameTitle, board.GameTitle);
+            Assert.Equal(updatedBoard.Description, board.Description);
+            Assert.Equal(updatedBoard.Rules, board.Rules);
+
+            updatedBoard.GameTitle.ShouldBe(board.GameTitle);
+            updatedBoard.Description.ShouldBe(board.Description);
+            updatedBoard.Rules.ShouldBe(board.Rules);
+
+            boardRepositoryMock.Verify(br => br.Update(It.IsAny<Board>()), Times.Once);
         }
     }
 }

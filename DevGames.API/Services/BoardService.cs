@@ -24,11 +24,13 @@ namespace DevGames.API.Services
             return board;
         }
 
-        public void Update(Board board, UpdateBoardInputModel model)
+        public Board Update(Board board, UpdateBoardInputModel model)
         {
             board.Update(model.Description, model.Rules);
 
             boardRepository.Update(board);
+
+            return board;
         }
 
         public bool BoardExists(int id) =>
