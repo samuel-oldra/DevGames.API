@@ -1,4 +1,5 @@
 using DevGames.API.Entities;
+using DevGames.API.Models;
 
 namespace DevGames.API.Services
 {
@@ -10,7 +11,7 @@ namespace DevGames.API.Services
 
         Post Add(Post post);
 
-        void AddComment(Comment comment);
+        Comment AddComment(int postId, AddCommentInputModel model);
 
         bool PostExists(int boardId, int id);
     }

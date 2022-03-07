@@ -1,4 +1,5 @@
 using DevGames.API.Entities;
+using DevGames.API.Models;
 using DevGames.API.Persistence.Repositories;
 
 namespace DevGames.API.Services
@@ -23,8 +24,14 @@ namespace DevGames.API.Services
             return post;
         }
 
-        public void AddComment(Comment comment) =>
+        public Comment AddComment(int postId, AddCommentInputModel model)
+        {
+            var comment = new Comment(model.Title, model.Description, model.User, postId);
+
             postRepository.AddComment(comment);
+
+            return comment;
+        }
 
         public bool PostExists(int boardId, int id) =>
             postRepository.PostExists(boardId, id);
