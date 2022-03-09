@@ -14,6 +14,10 @@ var builder = WebApplication.CreateBuilder(args);
 // PARA ACESSO AO BANCO EM MEMÓRIA
 // builder.Services.AddDbContext<DevGamesContext>(o => o.UseInMemoryDatabase("DevGamesDb"));
 
+// PARA ACESSO AO SQL Server
+// var connectionString = builder.Configuration.GetConnectionString("DevGamesCs");
+// builder.Services.AddDbContext<DevGamesContext>(o => o.UseSqlServer(connectionString));
+
 // PARA ACESSO AO SQLite
 var connectionString = builder.Configuration.GetConnectionString("DevGamesCs");
 builder.Services.AddDbContext<DevGamesContext>(o => o.UseSqlite(connectionString));
@@ -59,6 +63,15 @@ builder.Host.ConfigureAppConfiguration((hostingContext, config) =>
         .Enrich.FromLogContext()
 
         // PARA LOG NO SQL Server
+        //.WriteTo.MSSqlServer(
+        //    connectionString,
+        //    sinkOptions: new MSSqlServerSinkOptions()
+        //    {
+        //        AutoCreateSqlTable = true,
+        //        TableName = "Logs"
+        //    })
+
+        // PARA LOG NO SQLite
         .WriteTo.SQLite(Environment.CurrentDirectory + @"\Data\dados.db")
 
         // PARA LOG NO CONSOLE
