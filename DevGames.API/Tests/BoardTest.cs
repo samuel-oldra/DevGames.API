@@ -12,6 +12,38 @@ namespace DevGames.API.Tests
     public class BoardTests
     {
         [Fact]
+        public void GetAll()
+        {
+            // Arrange
+            var boardRepositoryMock = new Mock<IBoardRepository>();
+
+            var boardService = new BoardService(boardRepositoryMock.Object);
+
+            // Act
+            var boards = boardService.GetAll();
+
+            // Assert
+            boardRepositoryMock.Verify(br => br.GetAll(), Times.Once);
+        }
+
+        [Fact]
+        public void GetById()
+        {
+            // Arrange
+            var boardId = new Fixture().Create<int>();
+
+            var boardRepositoryMock = new Mock<IBoardRepository>();
+
+            var boardService = new BoardService(boardRepositoryMock.Object);
+
+            // Act
+            var board = boardService.GetById(boardId);
+
+            // Assert
+            boardRepositoryMock.Verify(br => br.GetById(It.IsAny<int>()), Times.Once);
+        }
+
+        [Fact]
         public void Add()
         {
             // Arrange
@@ -61,6 +93,23 @@ namespace DevGames.API.Tests
             updatedBoard.Rules.ShouldBe(board.Rules);
 
             boardRepositoryMock.Verify(br => br.Update(It.IsAny<Board>()), Times.Once);
+        }
+
+        [Fact]
+        public void BoardExists()
+        {
+            // Arrange
+            var boardId = new Fixture().Create<int>();
+
+            var boardRepositoryMock = new Mock<IBoardRepository>();
+
+            var boardService = new BoardService(boardRepositoryMock.Object);
+
+            // Act
+            var boardExists = boardService.BoardExists(boardId);
+
+            // Assert
+            boardRepositoryMock.Verify(br => br.BoardExists(It.IsAny<int>()), Times.Once);
         }
     }
 }
