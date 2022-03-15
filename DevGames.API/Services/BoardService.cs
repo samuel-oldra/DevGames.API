@@ -8,14 +8,14 @@ namespace DevGames.API.Services
     {
         private readonly IBoardRepository boardRepository;
 
-        public BoardService(IBoardRepository boardRepository) =>
-            this.boardRepository = boardRepository;
+        public BoardService(IBoardRepository boardRepository)
+            => this.boardRepository = boardRepository;
 
-        public IEnumerable<Board> GetAll() =>
-            boardRepository.GetAll();
+        public IEnumerable<Board> GetAll()
+            => boardRepository.GetAll();
 
-        public Board? GetById(int id) =>
-            boardRepository.GetById(id);
+        public Board? GetById(int id)
+            => boardRepository.GetById(id);
 
         public Board Add(Board board)
         {
@@ -33,7 +33,7 @@ namespace DevGames.API.Services
             return board;
         }
 
-        public bool BoardExists(int id) =>
-            boardRepository.BoardExists(id);
+        public bool BoardExists(int id)
+            => boardRepository.BoardExists(id);
     }
 }
