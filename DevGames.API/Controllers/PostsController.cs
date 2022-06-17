@@ -12,9 +12,8 @@ namespace DevGames.API.Controllers
     {
         private readonly IPostRepository repository;
 
-        public PostsController(IPostRepository repository) => this.repository = repository;
-
-        public IPostRepository Repository { get; }
+        public PostsController(IPostRepository repository) =>
+            this.repository = repository;
 
         // GET: api/boards/{id}/posts
         /// <summary>
@@ -52,7 +51,8 @@ namespace DevGames.API.Controllers
 
             var post = repository.GetById(postId);
 
-            if (post == null) return NotFound();
+            if (post == null)
+                return NotFound();
 
             return Ok(post);
         }
@@ -110,13 +110,14 @@ namespace DevGames.API.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> PostComment(int id, int postId, AddCommentInputModel model)
+        public IActionResult PostComment(int id, int postId, AddCommentInputModel model)
         {
             Log.Information("Endpoint - POST: api/boards/{id}/posts/{postId}/comments");
 
             var postExists = repository.PostExists(postId);
 
-            if (!postExists) return NotFound();
+            if (!postExists)
+                return NotFound();
 
             var comment = new Comment(model.Title, model.Description, model.User, postId);
 
