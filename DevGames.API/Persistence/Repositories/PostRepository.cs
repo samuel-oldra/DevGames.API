@@ -13,8 +13,8 @@ namespace DevGames.API.Persistence.Repositories
         public IEnumerable<Post> GetAllByBoard(int boardId) =>
             context.Posts.Where(p => p.BoardId == boardId);
 
-        public Post? GetById(int id) =>
-            context.Posts.Include(p => p.Comments).SingleOrDefault(p => p.Id == id);
+        public Post? GetById(int boardId, int id) =>
+            context.Posts.Include(p => p.Comments).SingleOrDefault(p => p.BoardId == boardId && p.Id == id);
 
         public void Add(Post post)
         {
@@ -28,7 +28,7 @@ namespace DevGames.API.Persistence.Repositories
             context.SaveChanges();
         }
 
-        public bool PostExists(int postId) =>
-            context.Posts.Any(p => p.Id == postId);
+        public bool PostExists(int boardId, int id) =>
+            context.Posts.Any(p => p.BoardId == boardId && p.Id == id);
     }
 }
