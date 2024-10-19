@@ -14,6 +14,11 @@ namespace DevGames.API.Controllers
 
         private readonly IBoardService boardService;
 
+        /// <summary>
+        /// Construtor
+        /// </summary>
+        /// <param name="postService"></param>
+        /// <param name="boardService"></param>
         public PostsController(
             IPostService postService,
             IBoardService boardService)

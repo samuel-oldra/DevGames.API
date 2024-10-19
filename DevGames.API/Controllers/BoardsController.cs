@@ -15,6 +15,11 @@ namespace DevGames.API.Controllers
 
         private readonly IBoardService boardService;
 
+        /// <summary>
+        /// Construtor
+        /// </summary>
+        /// <param name="mapper"></param>
+        /// <param name="boardService"></param>
         public BoardsController(
             IMapper mapper,
             IBoardService boardService)
